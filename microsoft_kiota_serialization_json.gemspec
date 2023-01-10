@@ -30,7 +30,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'microsoft_kiota_abstractions', '~> 0.12.0', '>= 0.12.0'
-  spec.add_runtime_dependency 'uuidtools'
+  spec.add_runtime_dependency 'uuidtools', '~> 2.2.0'
+  spec.add_runtime_dependency 'json', '~> 2.6.3'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop'
