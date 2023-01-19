@@ -25,11 +25,12 @@ Gem::Specification.new do |spec|
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
   end
+
   spec.bindir        = 'bin'
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'microsoft_kiota_abstractions', '>= 0.12', '< 0.14'
+  spec.add_runtime_dependency 'microsoft_kiota_abstractions', '~> 0.13.0', '>= 0.13.0'
   spec.add_runtime_dependency 'uuidtools', '~> 2.2.0'
   spec.add_runtime_dependency 'json', '~> 2.6.3'
   spec.add_development_dependency 'rake', '~> 13.0'
