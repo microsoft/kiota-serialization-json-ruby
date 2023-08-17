@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+## [0.9.1] - 2023-08-18
+
+### Changed
+
+- Improve handling of null values (#13)
+
 ## [0.9.0] - 2023-03-28
 
 ### Changed
