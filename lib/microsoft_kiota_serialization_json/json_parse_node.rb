@@ -49,8 +49,10 @@ module MicrosoftKiotaSerializationJson
     end
 
     def get_collection_of_primitive_values(type)
-      @current_node.map do |x|
-        current_parse_node = JsonParseNode.new(x)
+      @current_node.map do |object|
+        next if object.nil?
+
+        current_parse_node = JsonParseNode.new(object)
         case type
         when String
           current_parse_node.get_string_value
@@ -64,8 +66,8 @@ module MicrosoftKiotaSerializationJson
           current_parse_node.get_date_time_value
         when Time
           current_parse_node.get_time_value
-        when Date 
-          current_parse_node.get_date_value 
+        when Date
+          current_parse_node.get_date_value
         when MicrosoftKiotaAbstractions::ISODuration
           current_parse_node.get_duration_value
         when UUIDTools::UUID
@@ -80,8 +82,10 @@ module MicrosoftKiotaSerializationJson
 
     def get_collection_of_object_values(factory)
       raise StandardError, 'Factory cannot be null' if factory.nil?
-      @current_node.map do |x|
-        current_parse_node = JsonParseNode.new(x)
+      @current_node.map do |object|
+        next if object.nil?
+
+        current_parse_node = JsonParseNode.new(object)
         current_parse_node.get_object_value(factory)
       end
     end
@@ -98,6 +102,8 @@ module MicrosoftKiotaSerializationJson
     def assign_field_values(item)
       fields = item.get_field_deserializers
       @current_node.each do |k, v|
+        next if v.nil?
+
         deserializer = fields[k]
         if deserializer
           deserializer.call(JsonParseNode.new(v))

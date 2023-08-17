@@ -22,7 +22,7 @@ RSpec.describe MicrosoftKiotaSerializationJson do
     file.close
     message_response = MicrosoftKiotaSerializationJson::JsonParseNodeFactory.new.get_parse_node("application/json", data)
     object_value = message_response.get_object_value(lambda {|pn| Files::MessageCollectionResponse.create_from_discriminator_value(pn)})
-    
+
     ## Object Value tests
     expect(object_value.instance_of? Files::MessageCollectionResponse).to eq(true)
     expect(object_value.value[0].instance_of? Files::Message).to eq(true)
@@ -33,12 +33,12 @@ RSpec.describe MicrosoftKiotaSerializationJson do
     ## String tests
     expect(object_value.odata_next_link.instance_of? String).to eq(true)
     expect(object_value.value[0].body_preview.instance_of? String).to eq(true)
-    
+
     ## Boolean tests
     expect(object_value.value[0].is_draft.to_s.downcase == "true" || object_value.value[0].is_draft.to_s.downcase == "false").to eq(true)
     expect(object_value.value[0].is_read.to_s.downcase == "true" || object_value.value[0].is_read.to_s.downcase == "false").to eq(true)
     expect(object_value.value[0].body_preview.to_s.downcase == "true" || object_value.value[0].body_preview.to_s.downcase == "false").to eq(false)
-    
+
     ## Number tests
     expect(object_value.additional_data["numb"].instance_of? Integer).to eq(true)
 
@@ -46,9 +46,9 @@ RSpec.describe MicrosoftKiotaSerializationJson do
     expect(object_value.value[0].guid_id.instance_of? UUIDTools::UUID).to eq(true)
 
     ## Date tests
-    expect((object_value.value[0].received_date_time).instance_of? DateTime).to eq(true)
+    expect(object_value.value[0].received_date_time).to eq(nil)
     expect((object_value.value[0].sent_date_time).instance_of? DateTime).to eq(true)
-    
+
     ## Collection of Primitive values tests
     expect(object_value.additional_data["primativeValues"].instance_of? Array).to eq(true)
 
@@ -58,7 +58,7 @@ RSpec.describe MicrosoftKiotaSerializationJson do
     ## Enum tests
     expect(object_value.value[0].body.content_type.instance_of? Symbol).to eq(true)
   end
-  
+
   it "can serialize payload" do
     file = File.open("#{File.dirname(__FILE__)}/sample.json")
     data = file.read

@@ -12,7 +12,7 @@
             "lastModifiedDateTime": "2021-08-02T18:14:38Z",
             "changeKey": "CQAAABYAAABLW5j2RED8SKPe/uUseM8lAAAqleh7",
             "categories": ["cat1", "cat2", "cat3"],
-            "receivedDateTime": "2021-08-02T18:14:37Z",
+            "receivedDateTime": null,
             "sentDateTime": "2021-08-02T18:14:14Z",
             "hasAttachments": false,
             "internetMessageId": "<DM5PR00MB0309A13A7F35E878BDC0233EF2EF9@DM5PR00MB0309.namprd00.prod.outlook.com>",
