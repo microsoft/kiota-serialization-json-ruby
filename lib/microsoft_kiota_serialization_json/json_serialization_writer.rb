@@ -174,8 +174,8 @@ module MicrosoftKiotaSerializationJson
       end
     end
 
-    def write_enum_value(key, values)
-      self.write_string_value(key, values.to_s)
+    def write_enum_value(key, value)
+      self.write_string_value(key, value)
     end
 
     def get_serialized_content()
