@@ -152,16 +152,17 @@ module MicrosoftKiotaSerializationJson
           end
         end
         @writer[key] = values.map do |v|
-          self.write_object_value(nil, v).writer
+          self.write_object_value(nil, v, true).writer
         end
       end
     end
 
-    def write_object_value(key, value)
+    def write_object_value(key, value, array = false)
       if value
         if !key
           temp = JsonSerializationWriter.new()
           value.serialize(temp)
+          @writer = @writer.merge(temp.writer) unless array
           return temp
         end
         begin
@@ -179,7 +180,7 @@ module MicrosoftKiotaSerializationJson
     end
 
     def get_serialized_content()
-      return @writer.to_json #TODO encode to byte array to stay content type agnostic
+      return @writer.compact.to_json #TODO encode to byte array to stay content type agnostic
     end
 
     def write_additional_data(value)
