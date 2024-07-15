@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+## [0.9.2] - 2024-01-06
+
+### Changed
+
+- Fix setting the root element and don't return empty values
+
 ## [0.9.1] - 2023-08-18
 
 ### Changed
