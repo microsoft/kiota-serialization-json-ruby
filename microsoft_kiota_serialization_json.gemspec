@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'microsoft_kiota_abstractions', '~> 0.14.0'
   spec.add_runtime_dependency 'uuidtools', '>= 2.2', '< 3.1'
-  spec.add_runtime_dependency 'json', '>= 2.6.3', '< 2.13.0'
+  spec.add_runtime_dependency 'json', '>= 2.6.3', '< 2.14.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop'
