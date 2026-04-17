@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    ".": {
+      "release-type": "ruby",
+      "package-name": "microsoft_kiota_serialization_json",
+      "changelog-path": "CHANGELOG.md",
+      "include-v-in-tag": true,
+      "include-component-in-tag": false,
+      "bump-minor-pre-major": true,
+      "version-file": "lib/microsoft_kiota_serialization_json/version.rb"
+    }
+  },
+  "bootstrap-sha": "c9cbd9c12db5e683983b0089c5d2654eb78f02ca"
+}
