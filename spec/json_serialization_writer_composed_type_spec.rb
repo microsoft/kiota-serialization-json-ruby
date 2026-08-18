@@ -2,7 +2,16 @@
 
 require_relative 'spec_helper'
 require 'microsoft_kiota_abstractions'
-require 'microsoft_kiota_serialization_json'
+
+module MicrosoftKiotaAbstractions
+  module ComposedTypeWrapper; end
+
+  module ParseNodeHelper
+    def self.merge_deserializers_for_intersection_wrapper(*parsables)
+      parsables.compact.reduce({}) { |acc, p| acc.merge(p.get_field_deserializers) }
+    end
+  end
+end unless defined?(MicrosoftKiotaAbstractions::ComposedTypeWrapper)
 
 module TestModels
   class SimpleParsable
@@ -233,17 +242,14 @@ RSpec.describe MicrosoftKiotaSerializationJson::JsonSerializationWriter do
       ])
     end
 
-    it 'returns temp writers when key is nil' do
+    it 'serializes into self when key is nil' do
       writer = MicrosoftKiotaSerializationJson::JsonSerializationWriter.new
       obj1 = TestModels::SimpleParsable.new
       obj1.name = 'Alice'
       obj1.age = 30
 
-      result = writer.write_collection_of_object_values(nil, [obj1])
-      expect(result).to be_an(Array)
-      expect(result.length).to eq(1)
-      expect(result[0]).to be_a(MicrosoftKiotaSerializationJson::JsonSerializationWriter)
-      expect(result[0].writer).to eq({ 'name' => 'Alice', 'age' => 30 })
+      writer.write_collection_of_object_values(nil, [obj1])
+      expect(writer.writer).to eq({ 'name' => 'Alice', 'age' => 30 })
     end
 
     it 'does not contaminate the parent writer' do

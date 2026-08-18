@@ -146,15 +146,13 @@ module MicrosoftKiotaSerializationJson
 
     def write_collection_of_object_values(key, values)
       if values
-        serialized = values.map do |v|
-          temp = JsonSerializationWriter.new()
-          v.serialize(temp)
-          temp
-        end
         if !key
-          return serialized
+          return values.map { |v| write_object_value(nil, v) }
         end
-        @writer[key] = serialized.map(&:writer)
+        @writer[key] = values.map do |v|
+          write_object_value(key, v)
+          @writer.delete(key)
+        end
       end
     end
 
