@@ -146,30 +146,28 @@ module MicrosoftKiotaSerializationJson
 
     def write_collection_of_object_values(key, values)
       if values
+        serialized = values.map do |v|
+          temp = JsonSerializationWriter.new()
+          v.serialize(temp)
+          temp
+        end
         if !key
-          return values.map do |v|
-            self.write_object_value(nil, v)
-          end
+          return serialized
         end
-        @writer[key] = values.map do |v|
-          self.write_object_value(nil, v).writer
-        end
+        @writer[key] = serialized.map(&:writer)
       end
     end
 
-    def write_object_value(key, value)
+    def write_object_value(key, value, *additional_values_to_merge)
       if value
-        if !key
+        if key
           temp = JsonSerializationWriter.new()
           value.serialize(temp)
-          return temp
-        end
-        begin
-          temp = JsonSerializationWriter.new()
-          value.serialize(temp)
+          additional_values_to_merge.each { |v| v.serialize(temp) unless v.nil? }
           @writer[key] = temp.writer
-        rescue StandardError => e
-          raise e.class, "no key or value included in write_boolean_value(key, value)" 
+        else
+          value.serialize(self)
+          additional_values_to_merge.each { |v| v.serialize(self) unless v.nil? }
         end
       end
     end
