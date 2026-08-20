@@ -3,16 +3,6 @@
 require_relative 'spec_helper'
 require 'microsoft_kiota_abstractions'
 
-module MicrosoftKiotaAbstractions
-  module ComposedTypeWrapper; end
-
-  module ParseNodeHelper
-    def self.merge_deserializers_for_intersection_wrapper(*parsables)
-      parsables.compact.reduce({}) { |acc, p| acc.merge(p.get_field_deserializers) }
-    end
-  end
-end unless defined?(MicrosoftKiotaAbstractions::ComposedTypeWrapper)
-
 module TestModels
   class SimpleParsable
     include MicrosoftKiotaAbstractions::Parsable
