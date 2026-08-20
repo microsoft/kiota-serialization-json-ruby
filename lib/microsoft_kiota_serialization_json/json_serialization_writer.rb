@@ -149,20 +149,14 @@ module MicrosoftKiotaSerializationJson
         if !key
           return values.map { |v| write_object_value(nil, v) }
         end
-        @writer[key] = values.map do |v|
-          write_object_value(key, v)
-          @writer.delete(key)
-        end
+        @writer[key] = values.map { |v| object_value_hash(v) }
       end
     end
 
     def write_object_value(key, value, *additional_values_to_merge)
       if value
         if key
-          temp = JsonSerializationWriter.new()
-          value.serialize(temp)
-          additional_values_to_merge.each { |v| v.serialize(temp) unless v.nil? }
-          @writer[key] = temp.writer
+          @writer[key] = object_value_hash(value, *additional_values_to_merge)
         else
           value.serialize(self)
           additional_values_to_merge.each { |v| v.serialize(self) unless v.nil? }
@@ -186,6 +180,17 @@ module MicrosoftKiotaSerializationJson
         self.write_any_value(x,y)
       end
     end
+
+    private
+
+    def object_value_hash(value, *additional_values_to_merge)
+      temp = JsonSerializationWriter.new
+      value.serialize(temp)
+      additional_values_to_merge.each { |v| v.serialize(temp) unless v.nil? }
+      temp.writer
+    end
+
+    public
 
     def write_any_value(key, value)
       if value
